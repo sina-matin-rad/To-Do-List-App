@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const taskInput = document.getElementById('taskInput');
     const addTaskButton = document.getElementById('addTaskButton');
@@ -70,3 +72,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         taskList.appendChild(taskItem);
     }
+
+    function saveTasks() {
+        const tasks = [];
+        document.querySelectorAll('.task-item').forEach(taskItem => {
+            tasks.push({
+                text: taskItem.querySelector('span').textContent,
+                completed: taskItem.classList.contains('completed')
+            });
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function loadTasks() {
+        const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+        tasks.forEach(task => addTask(task.text, task.completed));
+    }
+});
