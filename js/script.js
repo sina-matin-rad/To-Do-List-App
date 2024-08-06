@@ -46,3 +46,27 @@ document.addEventListener('DOMContentLoaded', () => {
             saveTasks();
         }
     });
+
+    function addTask(taskText, completed = false) {
+        const taskItem = document.createElement('li');
+        taskItem.className = 'task-item';
+        if (completed) {
+            taskItem.classList.add('completed');
+        }
+        taskItem.innerHTML = `
+            <span>${taskText}</span>
+            <button class="delete-button">Delete</button>
+        `;
+
+        taskItem.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-button')) {
+                taskItem.remove();
+                saveTasks();
+            } else {
+                taskItem.classList.toggle('completed');
+                saveTasks();
+            }
+        });
+
+        taskList.appendChild(taskItem);
+    }
